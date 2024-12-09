@@ -31,6 +31,7 @@ RUN chown -R www-data:www-data /var/www \
 
 # Install application dependencies
 RUN composer install --no-dev --optimize-autoloader
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
