@@ -14,6 +14,8 @@ services:
       - laravel-network
     ports:
       - 9000:9000
+    command: >
+      sh -c "php artisan migrate --force; nohup php artisan queue:work --daemon & php-fpm"
 
   nginx:
     image: nginx:latest
