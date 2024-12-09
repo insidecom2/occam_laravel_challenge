@@ -105,6 +105,7 @@
                         </a>
                     </div>
                 </div>
+                <x-alert-message />
             </div>
             <!-- /Login -->
         </div>

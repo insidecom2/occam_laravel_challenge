@@ -9,7 +9,7 @@ window.isDarkStyle = window.Helpers.isDarkStyle();
 let menu,
     animate,
     isHorizontalLayout = false;
-var assetsPath = "assets/";
+var assetsPath = "/assets/";
 if (document.getElementById("layout-menu")) {
     isHorizontalLayout = document
         .getElementById("layout-menu")
