@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\RegisteredEvent;
 use App\Events\VerifyEmailEvent;
+use App\Events\VerifyTwoFAEvent;
+use App\Listeners\AuthSendEmailTwoFANotification;
 use App\Listeners\AuthSendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         VerifyEmailEvent::class => [
             AuthSendEmailVerificationNotification::class,
+        ],
+        VerifyTwoFAEvent::class => [
+            AuthSendEmailTwoFANotification::class
         ]
     ];
 

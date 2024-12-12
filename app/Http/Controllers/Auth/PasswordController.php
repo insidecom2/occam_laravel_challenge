@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
+use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,17 +15,24 @@ class PasswordController extends Controller
     /**
      * Update the user's password.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(UpdatePasswordRequest $request): RedirectResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
+        try {
+            $user = UserRepository::getById($request->user()->id);
+            // dd(Hash::check($request->current_password, $user->password));
+            if ($user && !Hash::check($request->current_password, $user->password)) {
+                return back()->with('error', 'Invalid current password');
+            }
 
-        return back()->with('status', 'password-updated');
+            UserRepository::update($request->user()->id, [
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            return back()->with('success', 'Updated password.');
+        } catch (\Throwable $th) {
+            dd($th);
+            return back()->with('error', 'Cannot updated password.');
+        }
     }
 }

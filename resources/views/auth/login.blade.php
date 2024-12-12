@@ -65,7 +65,7 @@
                                 </a>
                             </div>
                             <div class="input-group input-group-merge">
-                                <x-text-input id="password" class="block   w-full" type="password" name="password"
+                                <x-text-input id="password" class="block w-full" type="password" name="password"
                                     :value="old('password')" required autofocus autocomplete=""
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>

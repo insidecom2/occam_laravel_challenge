@@ -18,6 +18,15 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'is_email_2fa' => ['required', 'boolean'],
         ];
+    }
+
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'is_email_2fa' => $this->is_email_2fa ? 1 : 0,
+        ]);
     }
 }

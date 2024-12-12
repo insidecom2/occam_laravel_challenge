@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Notifications\CustomVerifyTwoFAEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
-class AuthSendEmailVerificationNotification implements ShouldQueue
+class AuthSendEmailTwoFANotification
 {
     /**
      * Create the event listener.
@@ -19,8 +21,8 @@ class AuthSendEmailVerificationNotification implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        if (! $event->user->hasVerifiedEmail()) {
-            $event->user->sendEmailVerificationNotification();
-        }
+        $user = $event->user;
+        $code = $user['code'];
+        $user->notify(new CustomVerifyTwoFAEmail($code));
     }
 }

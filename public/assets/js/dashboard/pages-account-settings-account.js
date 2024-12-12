@@ -11,22 +11,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
             deactivateButton = deactivateAcc.querySelector(
                 ".deactivate-account"
             );
-
         // Form validation for Add new record
         if (formAccSettings) {
             const fv = FormValidation.formValidation(formAccSettings, {
                 fields: {
-                    firstName: {
+                    name: {
                         validators: {
                             notEmpty: {
-                                message: "Please enter first name",
+                                message: "Please enter your name",
                             },
                         },
                     },
-                    lastName: {
+                    email: {
                         validators: {
                             notEmpty: {
-                                message: "Please enter last name",
+                                message: "Please enter your email",
+                            },
+                            emailAddress: {
+                                message: "Please enter valid email address",
                             },
                         },
                     },
@@ -35,11 +37,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap5: new FormValidation.plugins.Bootstrap5({
                         eleValidClass: "",
-                        rowSelector: ".col-md-6",
+                        rowSelector: ".mb-3",
                     }),
                     submitButton: new FormValidation.plugins.SubmitButton(),
                     // Submit the form when all fields are valid
-                    // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     autoFocus: new FormValidation.plugins.AutoFocus(),
                 },
                 init: (instance) => {
@@ -91,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         },
                     }),
                     // Submit the form when all fields are valid
-                    // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     autoFocus: new FormValidation.plugins.AutoFocus(),
                 },
                 init: (instance) => {
@@ -111,56 +113,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             });
         }
 
-        // Deactivate account alert
-        const accountActivation = document.querySelector("#accountActivation");
-
-        // Alert With Functional Confirm Button
-        if (deactivateButton) {
-            deactivateButton.onclick = function () {
-                if (accountActivation.checked == true) {
-                    Swal.fire({
-                        text: "Are you sure you would like to deactivate your account?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: "Yes",
-                        customClass: {
-                            confirmButton:
-                                "btn btn-primary me-2 waves-effect waves-light",
-                            cancelButton:
-                                "btn btn-label-secondary waves-effect waves-light",
-                        },
-                        buttonsStyling: false,
-                    }).then(function (result) {
-                        if (result.value) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                customClass: {
-                                    confirmButton:
-                                        "btn btn-success waves-effect waves-light",
-                                },
-                            });
-                        } else if (
-                            result.dismiss === Swal.DismissReason.cancel
-                        ) {
-                            Swal.fire({
-                                title: "Cancelled",
-                                text: "Deactivation Cancelled!!",
-                                icon: "error",
-                                customClass: {
-                                    confirmButton:
-                                        "btn btn-success waves-effect waves-light",
-                                },
-                            });
-                        }
-                    });
-                }
-            };
-        }
-
         // CleaveJS validation
-
         const phoneNumber = document.querySelector("#phoneNumber"),
             zipCode = document.querySelector("#zipCode");
         // Phone Mask
