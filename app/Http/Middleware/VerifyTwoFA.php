@@ -16,8 +16,8 @@ class VerifyTwoFA
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        $expiredTimeStamp = date("Y-m-d H:i:s", strtotime("+" . env('2FA_REMEMBER_EXPIRATION', 86400) . " seconds"));
-        if ($user['is_email_2fa'] && ($user['2fa_expired_at'] > $expiredTimeStamp || $user['2fa_expired_at'] == null)) {
+        $expiredTimeStamp = date("Y-m-d H:i:s");
+        if ($user['is_email_2fa'] && ($user['2fa_expired_at'] < $expiredTimeStamp || $user['2fa_expired_at'] == null)) {
             return redirect()->route('verify-2fa.index');
         }
         return $next($request);

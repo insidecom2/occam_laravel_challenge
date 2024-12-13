@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "php artisan migrate --force; nohup php artisan queue:work --daemon & php-fpm"
+      sh -c "composer install --optimize-autoloader; php artisan migrate --force; nohup php artisan queue:work --daemon & php-fpm"
 
   db:
     image: mariadb:10

@@ -1,37 +1,30 @@
-# Use the official PHP image with required extensions
 FROM php:8.2-fpm
 
-# Set working directory
-WORKDIR /var/www
-
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
-    nodejs \
-    npm \
-    vim \
     curl \
     libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
     unzip \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo_mysql zip bcmath
 
-# Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+     --install-dir=/usr/local/bin --filename=composer
 
-# Copy application files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
 COPY . .
 
-# Set proper permissions
 RUN chown -R www-data:www-data /var/www \
-&& chmod -R 755 /var/www/storage \
-&& chmod -R 755 /var/www/bootstrap/cache
+&& chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Install application dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Expose port 9000 and start php-fpm server
+# Expose port
 EXPOSE 9000
+
+# Start PHP-FPM
 CMD ["php-fpm"]
