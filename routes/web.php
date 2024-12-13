@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProfileController;
-use App\Http\Controllers\dashboard\UsersController;
+use App\Http\Controllers\Dashboard\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
