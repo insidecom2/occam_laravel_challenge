@@ -19,7 +19,7 @@ class AddUserAdmin extends Seeder
         $getUser = User::where('email', $emailAdmin)->first();
 
         if (!$getUser) {
-            User::factory()->create([
+            User::create([
                 'name' => 'Admin',
                 'email' => $emailAdmin,
                 'password' => Hash::make($passwordAdmin),
