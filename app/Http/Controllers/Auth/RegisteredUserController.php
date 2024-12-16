@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\RegisteredEvent;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
